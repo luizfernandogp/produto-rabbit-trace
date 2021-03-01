@@ -109,10 +109,6 @@
 						<image>poc-ms/produtos:${version}</image>
 					</to>
 					<container>
-						<jvmFlags>
-							<jvmFlag>-Xms256m</jvmFlag>
-							<jvmFlag>-Xmx512m</jvmFlag>
-						</jvmFlags>
 						<mainClass>com.pocms.produtos.ProdutosApplication</mainClass>
 					</container>
 				</configuration>
