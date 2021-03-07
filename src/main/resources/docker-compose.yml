@@ -1,0 +1,80 @@
+version: "3.7"
+services:
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - 9090:9090
+    restart: unless-stopped
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prom_data:/prometheus
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=grafana
+    volumes:
+      - ./grafana:/etc/grafana/provisioning/datasources
+  ms-venda:
+    image: ms-venda
+    container_name: ms-venda
+    ports:
+      - 8082:8082
+    restart: unless-stopped
+    environment:
+       AMQP_HOST: rabbit
+       MYSQL_HOST: mysql
+  ms-produto:
+    image: ms-produto
+    container_name: ms-produto
+    ports:
+      - 8081:8081
+    restart: unless-stopped
+    environment:
+      AMQP_HOST: rabbit
+  ms-cupom:
+    image: ms-cupom
+    container_name: ms-cupom
+    ports:
+      - 8083:8083
+    restart: unless-stopped
+    environment:
+      REDIS_HOST: redis
+  ms-email:
+    image: ms-email
+    container_name: ms-email
+    ports:
+      - 8084:8084
+    restart: unless-stopped
+    environment:
+       AMQP_HOST: rabbit
+       MAIL_FAKE: "true"
+       MYSQL_HOST: mysql
+  rabbit:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbit
+    ports:
+      - 15672:15672
+      - 5672:5672
+    restart: unless-stopped
+  redis:
+    image: "redis:alpine"
+    ports:
+      - 6379:6379
+  mysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+volumes:
+  prom_data:
