@@ -11,11 +11,12 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
-public class ProdutoResponse implements RepresentationModelAssembler<Produto, EntityModel<Produto>> {
+public class ProdutoResponse implements RepresentationModelAssembler<Produto, EntityModel<ProdutoResponseDto>> {
 
     @Override
-    public EntityModel<Produto> toModel(@NonNull Produto produto) {
-        return EntityModel.of(produto,
+    public EntityModel<ProdutoResponseDto> toModel(@NonNull Produto produto) {
+        var produtoResponseDto = new ProdutoResponseDto(produto.getId(), produto.getDescricao(), produto.getValor());
+        return EntityModel.of(produtoResponseDto,
                 linkTo(methodOn(ProdutoApiImpl.class).one(produto.getId())).withSelfRel(),
                 linkTo(methodOn(ProdutoApiImpl.class).all(null, null)).withRel("produtos"));
     }

@@ -2,7 +2,7 @@ package com.pocms.produtos.api;
 
 import com.pocms.produtos.api.data.request.ProdutoPersistDto;
 import com.pocms.produtos.api.data.request.ProdutoUpdateDto;
-import com.pocms.produtos.entity.Produto;
+import com.pocms.produtos.api.data.response.ProdutoResponseDto;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Contact;
@@ -16,8 +16,11 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @OpenAPIDefinition(
         info = @Info(
@@ -127,7 +130,7 @@ public interface ProdutoApi {
                     )
             )
     })
-    CollectionModel<EntityModel<Produto>> all(
+    CollectionModel<EntityModel<ProdutoResponseDto>> all(
             @RequestParam(value = "size", defaultValue = "10", required = false) Integer size,
             @RequestParam(value = "page", defaultValue = "0", required = false) Integer page
     );
@@ -217,7 +220,7 @@ public interface ProdutoApi {
                     )
             )
     })
-    EntityModel<Produto> one(@NonNull @PathVariable("id") Long id);
+    EntityModel<ProdutoResponseDto> one(@NonNull @PathVariable("id") Long id);
 
     @Operation(summary = "Persiste o produto")
     @PostMapping
@@ -268,7 +271,7 @@ public interface ProdutoApi {
                     )
             )
     })
-    EntityModel<Produto> newProduto(@NonNull @Valid @RequestBody ProdutoPersistDto produtoPersist);
+    EntityModel<ProdutoResponseDto> newProduto(@NonNull @Valid @RequestBody ProdutoPersistDto produtoPersist);
 
     @Operation(summary = "Altera as informações do produto já persistido")
     @PutMapping("{id}")
@@ -355,7 +358,7 @@ public interface ProdutoApi {
                     )
             )
     })
-    EntityModel<Produto> update(
+    EntityModel<ProdutoResponseDto> update(
             @NonNull @Valid @RequestBody ProdutoPersistDto produtoPersist,
             @NonNull @PathVariable Long id
     );
@@ -511,9 +514,140 @@ public interface ProdutoApi {
                     )
             )
     })
-    EntityModel<Produto> updateProduto(
+    EntityModel<ProdutoResponseDto> updateProduto(
             @NonNull @PathVariable("id") Long id,
             @Valid @RequestBody ProdutoUpdateDto produtoUpdateDto
     );
 
+    @Operation(summary = "Recupera a imagem do produto")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Retorna imagem correspondente ao item",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Parâmetro inválido",
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = {
+                                    @ExampleObject(
+                                            value = """
+                                                    {
+                                                         "timestamp": "2021-02-22T12:23:14.006+00:00",
+                                                         "status": "XXX_200",
+                                                         "userMessage": "For input string: \\"xxxx\\"",
+                                                         "developerMessage": "Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: \\"xxxx\\""
+                                                     }"""
+                                    )
+                            }
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Nenhum produto foi encontrado",
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = {
+                                    @ExampleObject(
+                                            value = """
+                                                    {
+                                                         "timestamp": "2021-02-22T12:23:52.847+00:00",
+                                                         "status": "XXX_100",
+                                                         "userMessage": "Produto não pode ser encontrado: ID[0]",
+                                                         "developerMessage": "Produto não pode ser encontrado: ID[0]"
+                                                     }"""
+                                    )
+                            }
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Erro inesperado",
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = {
+                                    @ExampleObject(
+                                            value = """
+                                                    {
+                                                         "timestamp": "2021-02-19T18:43:29.585+00:00",
+                                                         "status": "XXX_300",
+                                                         "userMessage": "Mensagem de erro inesperado",
+                                                         "developerMessage": "Mensagem de erro inesperado"
+                                                     }"""
+                                    )
+                            }
+                    )
+            )
+    })
+    @GetMapping("{id}/imagem")
+    @ResponseStatus(HttpStatus.OK)
+    void imagem(@PathVariable("id") Long id, HttpServletResponse response);
+
+    @Operation(summary = "Adiciona/Altera a imagem do produto")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "Imagem armazenada no banco de dados",
+                    content = @Content
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Parâmetro inválido",
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = {
+                                    @ExampleObject(
+                                            value = """
+                                                    {
+                                                         "timestamp": "2021-02-22T12:23:14.006+00:00",
+                                                         "status": "XXX_200",
+                                                         "userMessage": "For input string: \\"xxxx\\"",
+                                                         "developerMessage": "Failed to convert value of type 'java.lang.String' to required type 'java.lang.Long'; nested exception is java.lang.NumberFormatException: For input string: \\"xxxx\\""
+                                                     }"""
+                                    )
+                            }
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Nenhum produto foi encontrado",
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = {
+                                    @ExampleObject(
+                                            value = """
+                                                    {
+                                                         "timestamp": "2021-02-22T12:23:52.847+00:00",
+                                                         "status": "XXX_100",
+                                                         "userMessage": "Produto não pode ser encontrado: ID[0]",
+                                                         "developerMessage": "Produto não pode ser encontrado: ID[0]"
+                                                     }"""
+                                    )
+                            }
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Erro inesperado",
+                    content = @Content(
+                            mediaType = "application/json",
+                            examples = {
+                                    @ExampleObject(
+                                            value = """
+                                                    {
+                                                         "timestamp": "2021-02-19T18:43:29.585+00:00",
+                                                         "status": "XXX_300",
+                                                         "userMessage": "Mensagem de erro inesperado",
+                                                         "developerMessage": "Mensagem de erro inesperado"
+                                                     }"""
+                                    )
+                            }
+                    )
+            )
+    })
+    @PostMapping("{id}/imagem")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    void upload(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file) throws IOException;
 }

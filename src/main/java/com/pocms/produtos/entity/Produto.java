@@ -22,13 +22,22 @@ public class Produto implements Serializable {
     @Column(name = "VALOR", nullable = false, scale = 10, precision = 2)
     private BigDecimal valor;
 
+    @Column(name = "IMAGEM")
+    private byte[] imagem;
+
     @Deprecated
     public Produto() {
     }
 
-    private Produto(@NonNull String descricao, @NonNull BigDecimal valor) {
+    public Produto(@NonNull String descricao, @NonNull BigDecimal valor) {
        setDescricao(descricao);
        setValor(valor);
+    }
+
+    public Produto(@NonNull String descricao, @NonNull BigDecimal valor, byte[] imagem) {
+        setDescricao(descricao);
+        setValor(valor);
+        setImagem(imagem);
     }
 
     public Long getId() {
@@ -47,8 +56,16 @@ public class Produto implements Serializable {
         this.descricao = Objects.requireNonNull(descricao, "descricao não pode ser nula");
     }
 
+    public byte[] getImagem() {
+        return imagem;
+    }
+
     public void setValor(@NonNull BigDecimal valor) {
         this.valor = Objects.requireNonNull(valor, "valor não pode ser nulo");
+    }
+
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
     }
 
     @Override
