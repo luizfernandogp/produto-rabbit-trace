@@ -12,6 +12,7 @@ before_script:
     - curl -O https://bootstrap.pypa.io/get-pip.py
     - python3 get-pip.py 
     - pip install --upgrade six awscli awsebcli
+    - pip install --upgrade pip
     - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 592268041915.dkr.ecr.us-east-1.amazonaws.com
     
 services:
