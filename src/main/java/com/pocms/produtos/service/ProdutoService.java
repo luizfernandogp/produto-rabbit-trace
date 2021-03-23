@@ -7,6 +7,8 @@ import org.springframework.lang.NonNull;
 
 public interface ProdutoService {
 
+    long count();
+
     Page<Produto> all(@NonNull Pageable pageable);
 
     Produto one(@NonNull Long id);

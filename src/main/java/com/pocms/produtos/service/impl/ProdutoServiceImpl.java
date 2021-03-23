@@ -25,6 +25,11 @@ public class ProdutoServiceImpl implements ProdutoService {
     }
 
     @Override
+    public long count() {
+        return repository.count();
+    }
+
+    @Override
     public Page<Produto> all(@NonNull Pageable pageable) {
         Objects.requireNonNull(pageable);
         var produtos = repository.findAll(pageable);

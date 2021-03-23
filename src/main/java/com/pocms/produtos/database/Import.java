@@ -22,11 +22,13 @@ public class Import implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        inserirNovoProduto("cadeira", 1280D);
-        inserirNovoProduto("fogao", 675.90);
-        inserirNovoProduto("geladeira", 4500D);
-        inserirNovoProduto("mesa", 1450.50);
-        inserirNovoProduto("sofa", 4500D);
+        if (produtoService.count() == 0) {
+            inserirNovoProduto("cadeira", 1280D);
+            inserirNovoProduto("fogao", 675.90);
+            inserirNovoProduto("geladeira", 4500D);
+            inserirNovoProduto("mesa", 1450.50);
+            inserirNovoProduto("sofa", 4500D);
+        }
     }
 
     private void inserirNovoProduto(String descricao, Double valor) throws Exception {
