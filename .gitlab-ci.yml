@@ -7,7 +7,7 @@ variables:
   BRANCH: $CI_COMMIT_REF_NAME
 
 before_script:
-  - pip3 install python3-git --upgrade
+  - pip3 install python-git --upgrade
   - pip3 install docker --upgrade
   - pip3 install awscli --upgrade
   - pip3 install aws-sam-cli --upgrade
