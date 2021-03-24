@@ -1,4 +1,4 @@
-image: python:3.8
+image: docker:latest
 
 variables:
   AWS_ACCESS_KEY_ID:  $AWS_ACCESS_KEY_ID
@@ -7,12 +7,11 @@ variables:
   BRANCH: $CI_COMMIT_REF_NAME
 
 before_script:
-  - pip3 install python-git --upgrade
-  - pip3 install docker --upgrade
-  - pip3 install awscli --upgrade
-  - pip3 install aws-sam-cli --upgrade
-  - pip3 install awsebcli --upgrade
+  - apk add --update --no-cache build-base python3-dev python3 libffi-dev libressl-dev bash rust cargo gettext curl git
   - CI_COMMIT_SHORT_SHA=$(git rev-parse --short HEAD)
+  - curl -O https://bootstrap.pypa.io/get-pip.py
+  - python3 get-pip.py
+  - pip install --upgrade pip six awscli awsebcli cryptography
   - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 592268041915.dkr.ecr.us-east-1.amazonaws.com
 
 services:
@@ -34,7 +33,7 @@ package:
       fi
 
       if [ "$BRANCH" == "dev" ]; then
-        ENV="dev"      
+        ENV="dev"
       fi
 
     - IMAGE_ID="592268041915.dkr.ecr.us-east-1.amazonaws.com/$CI_PROJECT_NAME"
