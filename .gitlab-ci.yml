@@ -9,6 +9,7 @@ variables:
 before_script:
     - apk add --update --no-cache build-base python3-dev python3 libffi-dev libressl-dev bash  gettext curl git
     - CI_COMMIT_SHORT_SHA=$(git rev-parse --short HEAD)
+    - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
     - curl -O https://bootstrap.pypa.io/pip/3.5/get-pip.py
     - python3 get-pip.py
     - pip install --upgrade six awscli awsebcli
