@@ -1,4 +1,4 @@
-image: docker:latest
+image: docker:20.10.4
 
 variables:
   AWS_ACCESS_KEY_ID:  $AWS_ACCESS_KEY_ID
@@ -9,8 +9,7 @@ variables:
 before_script:
     - apk add --update --no-cache build-base python3-dev python3 libffi-dev libressl-dev bash  gettext curl git
     - CI_COMMIT_SHORT_SHA=$(git rev-parse --short HEAD)
-    - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-    - curl -O https://bootstrap.pypa.io/pip/3.5/get-pip.py
+    - curl -O https://bootstrap.pypa.io/get-pip.py
     - python3 get-pip.py
     - pip install --upgrade six awscli awsebcli
     - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 592268041915.dkr.ecr.us-east-1.amazonaws.com
