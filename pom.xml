@@ -72,13 +72,6 @@
         <dependency>
             <groupId>io.opentracing.contrib</groupId>
             <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
-            <version>3.3.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.opentracing.contrib</groupId>
-            <artifactId>opentracing-spring-rabbitmq-starter</artifactId>
-            <version>3.0.1</version>
         </dependency>
 
         <dependency>
