@@ -69,7 +69,7 @@
             <version>2.3.9</version>
         </dependency>
 
-        <dependency>
+       <!-- <dependency>
             <groupId>io.opentracing.contrib</groupId>
             <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
             <version>3.3.1</version>
@@ -79,6 +79,15 @@
             <groupId>io.opentracing.contrib</groupId>
             <artifactId>opentracing-spring-rabbitmq-starter</artifactId>
             <version>3.0.1</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
         </dependency>
 
         <dependency>
