@@ -153,7 +153,7 @@
                         <image>openjdk:15-jdk-slim-buster</image>
                     </from>
                     <to>
-                        <image>poc-ms/produtos:${version}</image>
+                        <image>592268041915.dkr.ecr.us-east-1.amazonaws.com/ms-produto:${version}</image>
                     </to>
                     <container>
                         <mainClass>com.pocms.produtos.ProdutosApplication</mainClass>
