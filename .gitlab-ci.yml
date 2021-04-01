@@ -7,7 +7,7 @@ variables:
   BRANCH: $CI_COMMIT_REF_NAME
 
 before_script:
-  - apk add --update --no-cache build-base python3-dev python3 libffi-dev libressl-dev sh rust cargo gettext curl git
+  - apk add --update --no-cache build-base python3-dev python3 libffi-dev libressl-dev bash rust cargo gettext curl git
   - CI_COMMIT_SHORT_SHA=$(git rev-parse --short HEAD)
   - curl -O https://bootstrap.pypa.io/get-pip.py
   - python3 get-pip.py
