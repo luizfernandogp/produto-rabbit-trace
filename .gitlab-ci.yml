@@ -8,7 +8,6 @@ variables:
   DOCKER_HOST: tcp://docker:2376
 
 before_script:
-  - docker info
   - apk add --update --no-cache build-base python3-dev python3 libffi-dev libressl-dev bash rust cargo gettext curl git
   - CI_COMMIT_SHORT_SHA=$(git rev-parse --short HEAD)
   - curl -O https://bootstrap.pypa.io/get-pip.py
