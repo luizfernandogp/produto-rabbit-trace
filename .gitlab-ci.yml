@@ -6,9 +6,6 @@ variables:
   AWS_DEFAULT_REGION: us-east-1
   BRANCH: $CI_COMMIT_REF_NAME
   DOCKER_HOST: tcp://docker:2376
-  DOCKER_TLS_CERTDIR: "/certs"
-  DOCKER_TLS_VERIFY: 1
-  DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
 
 before_script:
   - docker info
