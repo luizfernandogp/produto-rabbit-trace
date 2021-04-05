@@ -15,7 +15,8 @@ before_script:
   - curl -O https://bootstrap.pypa.io/get-pip.py
   - python3 get-pip.py
   - pip install --upgrade pip six awscli awsebcli cryptography
-
+  - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 592268041915.dkr.ecr.us-east-1.amazonaws.com
+  
 services:
   - docker:19.03.13-dind
   
@@ -24,9 +25,6 @@ stages:
 
 package:
   stage: package
-  
-  before_script:
-    - docker info
 
   script:
     - |
@@ -49,7 +47,6 @@ package:
     - echo "Building and tagging image..."
     - docker build -t $IMAGE_ID:$IMAGE_TAG .
     - echo "Pushing image to Elastic Container Registry..."
-    - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 592268041915.dkr.ecr.us-east-1.amazonaws.com
     - docker push $IMAGE_ID:$IMAGE_TAG
     - echo Done!!!
     - ARGO_PATH=devops/argocd/app/$ENV/$CI_PROJECT_NAME
