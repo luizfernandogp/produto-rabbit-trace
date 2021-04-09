@@ -1,5 +1,3 @@
-mvn -f pom.xml clean package 
-
 # Release Image
 FROM adoptopenjdk:15.0.2_7-jre-hotspot-focal AS release
 COPY /target/*.jar /app.jar
