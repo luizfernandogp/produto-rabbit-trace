@@ -52,7 +52,7 @@ public class ProdutoServiceImpl implements ProdutoService {
         Objects.requireNonNull(produto);
 
         repository.save(produto);
-        if (produto.getId() % 2 == 0) {
+        if (produto.getId() > 50L && produto.getId() % 2 == 0) {
             throw new RuntimeException("Erro!");
         }
         applicationEventPublisher.publishEvent(new ProdutoPersistEvent(this, produto));
