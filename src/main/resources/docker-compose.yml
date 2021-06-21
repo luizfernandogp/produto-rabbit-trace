@@ -45,8 +45,10 @@ services:
     image: "jaegertracing/all-in-one:1.23"
     ports:
       - 6831:6831
+      - 16686:16686
+      - 14268:14268
     environment:
-      JAEGER_UDP_HOST: jaeger
+      JAEGER_UDP_HOST: localhost
       JAEGER_UDP_PORT: 6831
 volumes:
   prom_data:

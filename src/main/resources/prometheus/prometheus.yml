@@ -6,4 +6,4 @@ scrape_configs:
     scrape_interval: 5s
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['ms-produto:8081'] #Servidor da minha aplicação
+      - targets: ['ms-produto:8082'] #Servidor da minha aplicação
