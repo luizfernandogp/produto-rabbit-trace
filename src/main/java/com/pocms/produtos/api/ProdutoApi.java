@@ -28,7 +28,7 @@ import java.io.IOException;
                 description = "Essa API provê endpoints para manipular os dados de produtos no banco de dados",
                 version = "1.0",
                 contact = @Contact(
-                        name = "Banco PAN digital"
+                        name = "Produtos Digitais"
                 )
         )
 )

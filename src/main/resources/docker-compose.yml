@@ -22,15 +22,6 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=grafana
     volumes:
       - ./grafana:/etc/grafana/provisioning/datasources
-  ms-venda:
-    image: ms-venda
-    container_name: ms-venda
-    ports:
-      - 8082:8082
-    restart: unless-stopped
-    environment:
-       AMQP_HOST: rabbit
-       MYSQL_HOST: mysql
   ms-produto:
     image: ms-produto
     container_name: ms-produto
@@ -39,24 +30,6 @@ services:
     restart: unless-stopped
     environment:
       AMQP_HOST: rabbit
-  ms-cupom:
-    image: ms-cupom
-    container_name: ms-cupom
-    ports:
-      - 8083:8083
-    restart: unless-stopped
-    environment:
-      REDIS_HOST: redis
-  ms-email:
-    image: ms-email
-    container_name: ms-email
-    ports:
-      - 8084:8084
-    restart: unless-stopped
-    environment:
-       AMQP_HOST: rabbit
-       MAIL_FAKE: "true"
-       MYSQL_HOST: mysql
   rabbit:
     image: rabbitmq:3-management-alpine
     container_name: rabbit
@@ -68,13 +41,12 @@ services:
     image: "redis:alpine"
     ports:
       - 6379:6379
-  mysql:
-    image: mysql
-    command: --default-authentication-plugin=mysql_native_password
-    restart: always
+  jaeger:
+    image: "jaegertracing/all-in-one:1.23"
     ports:
-      - 3306:3306
+      - 6831:6831
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      JAEGER_UDP_HOST: jaeger
+      JAEGER_UDP_PORT: 6831
 volumes:
   prom_data:

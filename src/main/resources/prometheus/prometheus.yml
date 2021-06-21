@@ -7,18 +7,3 @@ scrape_configs:
     metrics_path: '/actuator/prometheus'
     static_configs:
       - targets: ['ms-produto:8081'] #Servidor da minha aplicação
-  - job_name: 'spring-monitoring-cupom'
-    scrape_interval: 5s
-    metrics_path: '/actuator/prometheus'
-    static_configs:
-      - targets: ['ms-cupom:8083'] #Servidor da minha aplicação
-  - job_name: 'spring-monitoring-email'
-    scrape_interval: 5s
-    metrics_path: '/actuator/prometheus'
-    static_configs:
-      - targets: ['ms-email:8084'] #Servidor da minha aplicação
-  - job_name: 'spring-monitoring-venda'
-    scrape_interval: 5s
-    metrics_path: '/actuator/prometheus'
-    static_configs:
-      - targets: ['ms-venda:8082'] #Servidor da minha aplicação
